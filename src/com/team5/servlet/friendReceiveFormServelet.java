@@ -17,45 +17,33 @@ import com.team5.dto.MemberInfo;
 @WebServlet("/friend/friendReceiveForm.action")
 public class friendReceiveFormServelet extends HttpServlet {
 
-	private final int STATUS=0;//친구가 아닌 관계에서 친구요청을 받은 목록을 보여줘야하기 때문에 status가 0
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private final int STATUS=0;// 친구요청 받은 목록을 보여주기: status = 0
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+					throws ServletException, IOException {
 		
 		response.setContentType("text/plain;charset=utf-8");
-		
-		MemberDao dao=new MemberDao();
+
+		//1. get data & save it to Request
 		Member myMember = (Member)(request.getSession().getAttribute("loginuser"));
-		
-		ArrayList<MemberInfo> friendInfos=dao.memberInfosByMemberTwoAndStatus(myMember, STATUS);
-		ArrayList<Member> friends=dao.membersByMemberTwoAndStatus(myMember, STATUS);
+
+		MemberDao dao = new MemberDao();
+		ArrayList<MemberInfo> friendInfos = dao.memberInfosByMemberTwoAndStatus(myMember, STATUS);
 		request.setAttribute("friendInfos", friendInfos);
+
+		ArrayList<Member> friends = dao.membersByMemberTwoAndStatus(myMember, STATUS);
 		request.setAttribute("friends", friends);
 
-		
-			RequestDispatcher dispatcher=
-			request.getRequestDispatcher("/WEB-INF/views/include/friendReceiveForm.jsp");
-			dispatcher.forward(request, response);
-			
-		
+		//3. redirect
+		RequestDispatcher dispatcher=
+							request.getRequestDispatcher("/WEB-INF/views/include/friendReceiveForm.jsp");
+		dispatcher.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+						throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

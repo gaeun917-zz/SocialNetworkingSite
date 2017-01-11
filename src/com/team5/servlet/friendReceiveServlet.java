@@ -1,8 +1,6 @@
 package com.team5.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,36 +12,35 @@ import javax.servlet.http.HttpSession;
 
 import com.team5.dao.MemberDao;
 import com.team5.dto.Member;
-import com.google.gson.Gson;
 
 @WebServlet("/friend/friendReceive.action")
 public class friendReceiveServlet extends HttpServlet {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+					throws ServletException, IOException {
+
 		response.setContentType("text/plain;charset=utf-8");
-		
-		String requestSender=request.getParameter("memberId");
-				
-		MemberDao dao=new MemberDao();
-		
+
+		//1. get data
+		String requestSender = request.getParameter("memberId");
 		Member myMember = (Member)(request.getSession().getAttribute("loginuser"));
-		
+
+		//2. set data
+		MemberDao dao = new MemberDao();
 		dao.updateFriendAddFinally(requestSender, myMember);
-		
-		
-			RequestDispatcher dispatcher=
-			request.getRequestDispatcher("/index.jsp");
-			dispatcher.forward(request, response);
-			
-		
+
+		//3. redirect
+		RequestDispatcher dispatcher=
+						request.getRequestDispatcher("/index.jsp");
+		dispatcher.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+					throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
 
 
