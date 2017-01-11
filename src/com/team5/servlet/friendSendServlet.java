@@ -15,6 +15,7 @@ import com.team5.dto.Member;
 @WebServlet("/friend/friendSend.action")
 public class friendSendServlet extends HttpServlet {
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 						throws ServletException, IOException {
 
@@ -34,6 +35,7 @@ public class friendSendServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
