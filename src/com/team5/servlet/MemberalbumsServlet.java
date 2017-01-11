@@ -22,33 +22,30 @@ import com.team5.dto.UploadFile;
 public class MemberalbumsServlet extends HttpServlet {
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
-		
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+					throws ServletException, IOException {
+
+		//1. get data
 		String memberId = req.getParameter("memberid");
 		int iMemberId = Integer.parseInt(memberId);
-		
 		UploadDao2 dao = new UploadDao2();
+
+		//2. set data(memeber id를 파라미터로 dao에 있는 method실행-> return 값을 set)
 		List<Board> boards = dao.selectBoardList(iMemberId);
-		
-		//3. 조회된 데이터를 jsp에서 사용하도록 Request에 저장
-		req.setAttribute("boards", boards);	
-		
-		// 업로드된 모든 파일들의 목록을 가져온다.
-		List<UploadFile> uploadfiles = dao.selectUploadfileList(); 
-		req.setAttribute("uploadfiles", uploadfiles); 
-		// 모든 리스트
-		
-		
-		
-		//4. 목록 보기 jsp로 forward
+		req.setAttribute("boards", boards);
+
+		List<UploadFile> uploadfiles = dao.selectUploadfileList();// 업로드된 모든 파일들의 목록을 가져온다.
+		req.setAttribute("uploadfiles", uploadfiles);
+
+		//3. redirect(jsp로 forward)
 		RequestDispatcher dispatcher = 
-			req.getRequestDispatcher("/WEB-INF/views/member/lbums.jsp");
+						req.getRequestDispatcher("/WEB-INF/views/member/lbums.jsp");
 		dispatcher.forward(req, resp);
 	}
+
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+					throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }

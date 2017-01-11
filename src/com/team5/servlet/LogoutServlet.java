@@ -18,20 +18,20 @@ import com.team5.dto.Member;
 public class LogoutServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+					throws ServletException, IOException {
 
-		//로그아웃 처리 (세션에서 관련 데이터 제거)
+		//1. 로그아웃 처리 (세션에서 관련 데이터 제거)
 		HttpSession session = req.getSession();
-		session.removeAttribute("loginuser");//지정된 데이터 삭제
+		session.removeAttribute("loginuser");
 		//session.invalidate(); //사용자 세션 전체를 삭제
 		
 		resp.sendRedirect("/team5/index.jsp");
-		
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+					throws ServletException, IOException {
 		doGet(req, resp);// 처리 내용이 같으므로 doGet으로 전달
 	}
-
 }
