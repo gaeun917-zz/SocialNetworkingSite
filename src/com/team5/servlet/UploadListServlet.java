@@ -21,31 +21,26 @@ public class UploadListServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-		throws ServletException, IOException {
-		
-		
-		//1. 로그인 여부 확인 (로그인 하지 않은 사용자는 로그인 화면으로 redirect))
+						throws ServletException, IOException {
+
+		// (if 'upload page' is only for member, then use the if statment below to check user has logged in)
+		// if user is not a member, redirect to a login page
 //		if (req.getSession().getAttribute("loginuser") == null) {
-//			resp.sendRedirect(
-//				"/demoweb/account/loginform.action?returnurl=" + req.getRequestURI());
+//			resp.sendRedirect("/demoweb/account/loginform.action?returnurl=" + req.getRequestURI());
 //			return;
 //		}
-		
 
-		//2. 목록 데이터 조회
+		//1. search data(upload from dao)
 		UploadDao dao = new UploadDao();
 		List<Upload> uploads = dao.selectUploadList();
 		
-		//3. 조회된 데이터를 jsp에서 사용하도록 Request에 저장
+		//2. set data (into req)
 		req.setAttribute("uploads", uploads);
 		
-		//4. 목록 보기 jsp로 forward
+		//3. forward to jsp(with req)
 		RequestDispatcher dispatcher = 
 			req.getRequestDispatcher("/WEB-INF/views/upload/uploadlist.jsp");
 		dispatcher.forward(req, resp);
-		//
-		
-		
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)

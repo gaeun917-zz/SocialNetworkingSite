@@ -21,46 +21,42 @@ import com.team5.dto.Member;
 public class ModifyFormServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+					throws ServletException, IOException {
 		RequestDispatcher dispatcher = 
-			req.getRequestDispatcher(
-				"/WEB-INF/views/member/index.jsp");
+			req.getRequestDispatcher("/WEB-INF/views/member/index.jsp");
 		dispatcher.forward(req, resp);
 	}
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+					throws ServletException, IOException {
 
-		//1. 데이터 읽기
+		//1. get data
 		String passwd = req.getParameter("passwd");
 		String highschool = req.getParameter("highschool");
 		String university = req.getParameter("university");
 		String location = req.getParameter("location");
 		String phone = req.getParameter("phone");
-		
-		
 		System.out.printf("[%s][%s][%s][%s][%s]",
-			passwd, highschool, university,  location, phone);
+							passwd, highschool, university,  location, phone);
 		
-		//2. 데이터 처리 (DB에 데이터를 저장)
+		//2. set data (into DB)
 		Member member = new Member();
-		member.setPasswd(passwd);
+				member.setPasswd(passwd);
 		
 		MemberInfo memberinfo = new MemberInfo();
-		memberinfo.setHighschool(highschool);
-		memberinfo.setUniversity(university);
-		memberinfo.setLocation(location);
-		memberinfo.setPhone(phone);
+					memberinfo.setHighschool(highschool);
+					memberinfo.setUniversity(university);
+					memberinfo.setLocation(location);
+					memberinfo.setPhone(phone);
 		
 		MemberDao dao = new MemberDao();
-		dao.modifyPassword(member);
-		dao.modifyUser(memberinfo);
-		//3. 결과에 따라 이동
-		//지정된 경로로 요청을 보내는 명령
+					dao.modifyPassword(member);
+					dao.modifyUser(memberinfo);
+
+		//3. redirect to index(after changing passwd or memberInfo)
 		resp.sendRedirect("/team5/index.jsp");
 		
 	}
-
-	
-
 }

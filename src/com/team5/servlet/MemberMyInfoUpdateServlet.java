@@ -23,7 +23,6 @@ public class MemberMyInfoUpdateServlet extends HttpServlet {
 		//1. get data (memeberId, location, highschool, university, phone)
 		String memberId = req.getParameter("memberid");
 		int iMemberId = Integer.parseInt(memberId); //string to int
-		
 		String location = req.getParameter("location");
 		String highschool = req.getParameter("highschool");
 		String university = req.getParameter("university");

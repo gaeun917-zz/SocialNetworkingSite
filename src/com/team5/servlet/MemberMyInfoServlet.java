@@ -19,12 +19,14 @@ public class MemberMyInfoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 							throws ServletException, IOException {
 
-		//1. get data(memberId, memberInfo) & set data
+		//1. get data(memberId)
 		String memberId = req.getParameter("memberid");
+
 		int iMemberId = Integer.parseInt(memberId);
-		
+
+		//2. set data(use memberId to get memberinfo)
 		MemberDao dao = new MemberDao();
-		MemberInfo memberinfo= dao.selectMemberInfoById(iMemberId);
+		MemberInfo memberinfo = dao.selectMemberInfoById(iMemberId);
 		req.setAttribute("memberinfo", memberinfo);	
 		 
 		//3. forward to jsp
@@ -32,8 +34,7 @@ public class MemberMyInfoServlet extends HttpServlet {
 				req.getRequestDispatcher("/WEB-INF/views/member/Information.jsp");
 		dispatcher.forward(req, resp);
 	}
-	
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);// same logic is used: method=post to method=get

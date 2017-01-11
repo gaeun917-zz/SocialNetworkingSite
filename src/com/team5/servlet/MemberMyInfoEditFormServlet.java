@@ -24,22 +24,22 @@ public class MemberMyInfoEditFormServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 					throws ServletException, IOException {
 
-		// 1. get data
+		// 1. get data(memeberid to get memberinfo)
 		String memberId = req.getParameter("memberid");
 		if (memberId == null || memberId.length() == 0) {
-			System.out.println("no memberid");
-			resp.sendRedirect("/team5/member/memberinfo.action");	// 읽지 못하면 리스트로 이동
+			resp.sendRedirect("/team5/member/memberinfo.action");	//if there is no memeberid, redirect
 			return;
 		}
 		int iMemberId = Integer.parseInt(memberId);//string to int
 
-		// 2. search data(dao) and set data
 		MemberDao dao = new MemberDao();
 		MemberInfo memberinfo = dao.selectMemberInfoById(iMemberId);
 		if (memberinfo == null) {
-			resp.sendRedirect("list.action");	// 없으면 목록으로
+			resp.sendRedirect("list.action");
 			return;
 		}
+
+		//2. set data
 		req.setAttribute("memberinfo", memberinfo);
 
 		//3. redirect

@@ -25,19 +25,18 @@ import com.team5.dto.UploadFile;
 
 @WebServlet("/upload/write.action")
 public class UploadWriteServlet extends HttpServlet {
-	
-	//doGet에 uploadWriteform을 붙여넣고 doPost랑 자리를 바꿈 
+
+	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-			
-			RequestDispatcher dispatcher = 
-					req.getRequestDispatcher("/WEB-INF/views/upload/uploadwriteform.jsp");
-				dispatcher.forward(req, resp);
-		}
+						throws ServletException, IOException {
+		RequestDispatcher dispatcher =
+				req.getRequestDispatcher("/WEB-INF/views/upload/uploadwriteform.jsp");
+		dispatcher.forward(req, resp);
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            			throws ServletException, IOException {
 		
 		request.setCharacterEncoding("utf-8");
 
@@ -47,12 +46,12 @@ public class UploadWriteServlet extends HttpServlet {
 			return;
 		}
 
-		//1. 전송데이터 읽기
+		//1. get data
 		ServletContext application = request.getServletContext();
 		//application.getRealPath (ServletContext.getRealPath)
-		//-> 가상경로(http://......) -> 물리경로(C:\\......)
-		String path = application.getRealPath("/upload");//실제 파일을 저장할 경로
-		String tempPath = application.getRealPath("/WEB-INF/temp");//임시 파일을 저장할 경로
+		//-> virtual path(http://...) -> physical path(C:\\...)
+		String path = application.getRealPath("/upload");//path to save file
+		String tempPath = application.getRealPath("/WEB-INF/temp");
 
 		//전송 데이터 각 요소를 분리해서 개별 객체를 만들때 사용할 처리기
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -81,11 +80,10 @@ public class UploadWriteServlet extends HttpServlet {
                     } else if (item.getFieldName().equals("memberId")) {
                         upload.setUploader(item.getString("utf-8"));
                     }
-
-                }else if(item.getSize() > 0){ //파일의 내용이 존재하는 경우
+                }else if(item.getSize() > 0){// 파일의 내용이 존재하는 경우
 
                     String fileName = item.getName();
-                    if (fileName.contains("\\")) { //파일이름 반환(C:\\AAA\\BBB\\CCC.txt -> CCC.txt)
+                    if (fileName.contains("\\")) { //returning file name, not path(C:\\AAA\\BBB\\CCC.txt -> CCC.txt)
                         fileName = fileName.substring(fileName.lastIndexOf(("\\") + 1));
                     }
 
@@ -108,8 +106,8 @@ public class UploadWriteServlet extends HttpServlet {
 			    dao.insertUpload(upload);
                  //2.2 UploadFile insert
                 for (UploadFile f : files) {
-				/*f.setUploadNo(newUploadNo);*/
-				dao.insertUploadFile(f);
+					/*f.setUploadNo(newUploadNo);*/
+					dao.insertUploadFile(f);
                 }
 		} catch(Exception ex) {
 			ex.printStackTrace();
