@@ -17,40 +17,35 @@ import com.team5.dto.MemberInfo;
 public class MemberMyInfoUpdateServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+					throws ServletException, IOException {
+
+		//1. get data (memeberId, location, highschool, university, phone)
 		String memberId = req.getParameter("memberid");
-		System.out.println(memberId);
-		int iMemberId = Integer.parseInt(memberId);
+		int iMemberId = Integer.parseInt(memberId); //string to int
 		
 		String location = req.getParameter("location");
-		System.out.println(location);
 		String highschool = req.getParameter("highschool");
 		String university = req.getParameter("university");
 		String phone = req.getParameter("phone");
-		
-		//updateMemberInfo(MemberInfo memberinfo, int memberId) {
 
-		
+
+		//2. set data
 		MemberInfo memberinfo = new MemberInfo();
-		memberinfo.setLocation(location);
-		memberinfo.setHighschool(highschool);
-		memberinfo.setUniversity(university);
-		memberinfo.setPhone(phone);
-		
+					memberinfo.setLocation(location);
+					memberinfo.setHighschool(highschool);
+					memberinfo.setUniversity(university);
+					memberinfo.setPhone(phone);
+
 		MemberDao dao = new MemberDao();
 		dao.updateMemberInfo(memberinfo ,iMemberId);
-		
+
+		//3. redirect to personal page
 		resp.sendRedirect("memberinfo.action?memberid="+ memberId);
 	}
-	
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doGet(req, resp);// 처리 내용이 같으므로 doGet으로 전달
-		
+		doGet(req, resp);// same logic is used: method=post -> method=get
 	}
-
-	
-
 }

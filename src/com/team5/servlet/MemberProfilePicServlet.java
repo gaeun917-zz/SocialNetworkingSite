@@ -21,54 +21,50 @@ import com.team5.dto.UploadFile;
 public class MemberProfilePicServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. 데이터 읽기 (없으면 목록으로 이동)
-				String memberid = request.getParameter("memberid");
-				int imemberid = Integer.parseInt(memberid);
-				String profilePic = request.getParameter("profilepic");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+					throws ServletException, IOException {
+
+		response.setContentType("text/plain;charset=utf-8");
+
+		//1. get data
+		String memberid = request.getParameter("memberid");
+		System.out.println(memberid);
+		int imemberid = Integer.parseInt(memberid);
+		String profilePic = request.getParameter("profilepic");
+
+		//2. set data (insert)
+		Member member = new Member();
+				member.setMemberId(imemberid);
+				member.setProfile_pic(profilePic);
 				
-				System.out.println(memberid);
-				Member member = new Member();
-				member.setMemberId(imemberid);		
-				member.setProfile_pic(profilePic);		
+		UploadDao2 dao = new UploadDao2();
+					dao.updateProfile_pic(member);
 				
-				//2. 데이터 insert
-				UploadDao2 dao = new UploadDao2();
-				dao.updateProfile_pic(member);
+		PrintWriter out = response.getWriter();
+					out.println(profilePic);
 				
-				response.setContentType("text/plain;charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println(profilePic);
-				
-				//out.println("error");
+
+//		List<Board> boards = dao.selectBoardList(imemberid);
+//				request.setAttribute("boards", boards);
 //				
+//		// list of all files uploaded
+//		List<UploadFile> uploadfiles = dao.selectUploadfileList();
+//		request.setAttribute("uploadfiles", uploadfiles);
 //				
-//				List<Board> boards = dao.selectBoardList(imemberid);
-//				//3. 조회된 데이터를 jsp에서 사용하도록 Request에 저장
-//				request.setAttribute("boards", boards);	
-//				
-//				// 업로드된 모든 파일들의 목록을 가져온다.
-//				List<UploadFile> uploadfiles = dao.selectUploadfileList(); 
-//				request.setAttribute("uploadfiles", uploadfiles); 
-//				
-//				BoardDao dao2 = new BoardDao();
-////				List<Board> boards = dao.selectBoardList();
-//				List<Board> boards2 = dao2.selectBoardList();
-//				
+//		BoardDao dao2 = new BoardDao();
+//		List<Board> boards2 = dao2.selectBoardList();
+//		request.setAttribute("boards2", boards2);
 //
-////				//3. 조회된 데이터를 jsp에서 사용하도록 Request에 저장
-//				request.setAttribute("boards2", boards2);
-//				//3. detail로 이동
-//				RequestDispatcher dispatcher = 
-//						request.getRequestDispatcher(
-//								"/WEB-INF/views/member/detail.jsp");
-//					dispatcher.forward(request, response);
+// 		// 3. forward to jsp
+//		RequestDispatcher dispatcher =
+//				request.getRequestDispatcher("/WEB-INF/views/member/detail.jsp");
+//		dispatcher.forward(request, response);
 	}
 		
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-req.setCharacterEncoding("utf-8");
-		
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+						throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
 		doGet(req, resp);
 	}
 }
