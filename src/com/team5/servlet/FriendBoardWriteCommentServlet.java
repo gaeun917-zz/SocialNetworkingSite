@@ -33,72 +33,67 @@ import com.team5.dto.UploadFile;
 public class FriendBoardWriteCommentServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(
-		HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
-		// 코멘트를 데이터 베이스에 저장하고, 이걸 화면에 구현하는게 어려움 
-		//1. 데이터 읽기
-			String boardNo = request.getParameter("boardno");
-			if(boardNo==null && boardNo.length()==0){
-				response.sendRedirect("list.action");//없으면 목록으로 이동
-				return;
-			}
-			// 입력으로 넘어옴 
-			String memberId = request.getParameter("memberid");
-			int iMemberId = Integer.parseInt(memberId);
-			int iBoardNo = Integer.parseInt(boardNo);
-			String content = request.getParameter("content");
-			//작성자
-			Member member1 = (Member)request.getSession().getAttribute("loginuser");	
-			BoardComment comment = new BoardComment();
-			comment.setWriter(member1.getName());
-			comment.setMemberId(member1.getMemberId());
-			comment.setBoardNo(iBoardNo);
-			//comment.setWriter(member.getName());
-			comment.setContent(content);
-			
-			//2. 데이터 insert 
-			BoardDao dao = new BoardDao();
-			dao.insertComment(comment);
-			//3. detail로 이동 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+					throws ServletException, IOException {
+		//1. get data
+		//1.1 boardNo
+		String boardNo = request.getParameter("boardno");
+		if(boardNo==null && boardNo.length()==0){
+			response.sendRedirect("list.action");//없으면 목록으로 이동
+			return;
+		}
+		int iBoardNo = Integer.parseInt(boardNo);
 
-			UploadDao2 dao1 = new UploadDao2();
-			List<Board> boards = dao1.selectBoardList(iMemberId);
-			//3. 조회된 데이터를 jsp에서 사용하도록 Request에 저장
-			request.setAttribute("boards", boards);	
-			
-			// 업로드된 모든 파일들의 목록을 가져온다.
-			List<UploadFile> uploadfiles = dao1.selectUploadfileList(); 
-			request.setAttribute("uploadfiles", uploadfiles); 
-			
-			BoardDao dao2 = new BoardDao();
-//			List<Board> boards = dao.selectBoardList();
-			List<Board> boards2 = dao2.selectBoardList();
-			
-			MemberDao dao3 = new MemberDao();
-			Member member = dao3.selectMemberById(memberId);		
-			
-			request.setAttribute("member", member);
+		//1.2 memebr(loginuser,memeberId)
+		Member member1 = (Member)request.getSession().getAttribute("loginuser");
+		String memberId = request.getParameter("memberid");
+		int iMemberId = Integer.parseInt(memberId);
 
-//			//3. 조회된 데이터를 jsp에서 사용하도록 Request에 저장
-			request.setAttribute("boards2", boards2);
+		//1.3 content
+		String content = request.getParameter("content");
+
+		//1.4 save it to comment
+		BoardComment comment = new BoardComment();
+					comment.setBoardNo(iBoardNo);
+					comment.setWriter(member1.getName());
+					comment.setMemberId(member1.getMemberId());
+					comment.setContent(content);
 			
-			//3. 조회된 정보 표시
-			RequestDispatcher dispatcher = 
-					request.getRequestDispatcher(
-						"/WEB-INF/views/member/frienddetail.jsp");
-			dispatcher.forward(request, response);
+		//2. set data(insert)
+		BoardDao dao = new BoardDao();
+		dao.insertComment(comment);
+
+		//2.1 UploadDao
+		UploadDao2 dao1 = new UploadDao2();
+		List<Board> boards = dao1.selectBoardList(iMemberId);
+		request.setAttribute("boards", boards);
+			
+		List<UploadFile> uploadfiles = dao1.selectUploadfileList();
+		request.setAttribute("uploadfiles", uploadfiles);
+
+		//2.2 BoardDao
+		BoardDao dao2 = new BoardDao();
+		List<Board> boards2 = dao2.selectBoardList();
+		request.setAttribute("boards2", boards2);
+
+		//2.3 MemberDao
+		MemberDao dao3 = new MemberDao();
+		Member member = dao3.selectMemberById(memberId);
+		request.setAttribute("member", member);
+
+		//3. redirect
+		RequestDispatcher dispatcher =
+				request.getRequestDispatcher("/WEB-INF/views/member/frienddetail.jsp");
+		dispatcher.forward(request, response);
 			
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
-		
 		req.setCharacterEncoding("utf-8");
-		
 		doGet(req, resp);
 	}
-	
 }
 
 

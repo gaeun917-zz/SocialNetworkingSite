@@ -36,11 +36,9 @@ public class UploadWriteServlet extends HttpServlet {
 		}
 
 	@Override
-	protected void doPost(
-		HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 		
-		//요청 데이터를 읽을 때 사용할 문자 인코딩 설정
 		request.setCharacterEncoding("utf-8");
 
 		//파일 업로드를 포함하는지 확인 (multipart/form-data 형식인지 검사)
@@ -58,76 +56,66 @@ public class UploadWriteServlet extends HttpServlet {
 
 		//전송 데이터 각 요소를 분리해서 개별 객체를 만들때 사용할 처리기
 		DiskFileItemFactory factory = new DiskFileItemFactory();
-		factory.setSizeThreshold(1024 * 1024 * 2);//임시 파일 생성 여부를 결정하는 파일 크기
-		factory.setRepository(new File(tempPath));//임시 파일 저장 경로 설정
+							factory.setSizeThreshold(1024 * 1024 * 2);//임시 파일 생성 여부를 결정하는 파일 크기
+							factory.setRepository(new File(tempPath));//임시 파일 저장 경로 설정
 
 		//요청 파서 (요청 정보를 읽고 개별 요소를 구성하는 역할 수행)
 		ServletFileUpload uploader = new ServletFileUpload(factory);
-		uploader.setFileSizeMax(1024* 1024 * 10);//업로드 최대 파일 크기 설정
+						  uploader.setFileSizeMax(1024* 1024 * 10);//업로드 최대 파일 크기 설정
 
 		try {
-			//요청 정보를 파싱하고 분해해서 FileItem객체의 리스트로 반환
-			List<FileItem> items = uploader.parseRequest(request);
-	
-			//Upload 테이블에 insert할 데이터를 저장할 객체
-			Upload upload = new Upload();
+            //요청 정보를 파싱하고 분해해서 FileItem 객체의 리스트로 반환
+            List<FileItem> items = uploader.parseRequest(request);
+            //Upload에 insert할 데이터를 저장할 객체
+            Upload upload = new Upload();
+            //UploadFile에 insert할 데이터를 저장할 객체
+            ArrayList<UploadFile> files = new ArrayList<>();
 
-			//UploadFile 테이블에 insert할 데이터를 저장할 객체
-			ArrayList<UploadFile> files = new ArrayList<>(); 
-						
-			for (FileItem item : items) {
-				if (item.isFormField()) {//일반 form-data인 경우
-					if (item.getFieldName().equals("title")) {
-						upload.setTitle(item.getString("utf-8"));
-					} else if (item.getFieldName().equals("content")) {
-						upload.setContent(item.getString("utf-8"));
-					} else if (item.getFieldName().equals("memberId")) {
-						upload.setUploader(item.getString("utf-8"));
-					}
-				} else {//파일인 경우
-					if (item.getSize() > 0) {//파일의 내용이 존재하는 경우			
-						String fileName = item.getName();//파일이름 반환
-					
-						//C:\\AAA\\BBB\\CCC.txt -> CCC.txt
-						if (fileName.contains("\\")) {
-							fileName = fileName.substring(
-								fileName.lastIndexOf("\\") + 1);
-						}
-						
-						String uniqueFileName =
-							//Util.getUniqueFileName(path, fileName);
-							Util.getUniqueFileName(fileName);
-						
-						//파일을 로컬 경로에 저장
-						//item.write(new File(path, fileName));
-						item.write(new File(path, uniqueFileName));
-					
-						item.delete();//임시 파일을 삭제	
-						
-						UploadFile f = new UploadFile();						
-						f.setSavedFileName(uniqueFileName);
-						f.setUserFileName(fileName);
-						files.add(f);
-					}
-				}
-			}
-			
-			//데이터베이스에 데이터 insert
-			UploadDao dao = new UploadDao();
-			int newUploadNo = dao.insertUpload(upload);//Upload insert
-			for (UploadFile f : files) {
+            for (FileItem item : items) {
+                if (item.isFormField()) {//일반 form-data인 경우
+
+                    if (item.getFieldName().equals("title")) {
+                        upload.setTitle(item.getString("utf-8"));
+                    } else if (item.getFieldName().equals("content")) {
+                        upload.setContent(item.getString("utf-8"));
+                    } else if (item.getFieldName().equals("memberId")) {
+                        upload.setUploader(item.getString("utf-8"));
+                    }
+
+                }else if(item.getSize() > 0){ //파일의 내용이 존재하는 경우
+
+                    String fileName = item.getName();
+                    if (fileName.contains("\\")) { //파일이름 반환(C:\\AAA\\BBB\\CCC.txt -> CCC.txt)
+                        fileName = fileName.substring(fileName.lastIndexOf(("\\") + 1));
+                    }
+
+                    String uniqueFileName = Util.getUniqueFileName(fileName);
+                                            //Util.getUniqueFileName(path, fileName);
+                    item.write(new File(path, uniqueFileName)); //파일을 로컬 경로에 저장
+                    item.delete();//임시 파일을 삭제
+
+                    UploadFile f = new UploadFile();
+                                f.setSavedFileName(uniqueFileName);
+                                f.setUserFileName(fileName);
+                    files.add(f);
+                    }
+                }
+
+			    //2. data insert
+
+                //2.1 Upload insert
+			    UploadDao dao = new UploadDao();
+			    dao.insertUpload(upload);
+                 //2.2 UploadFile insert
+                for (UploadFile f : files) {
 				/*f.setUploadNo(newUploadNo);*/
-				dao.insertUploadFile(f);//UploadFile insert
-			}
-			
-		} catch (Exception ex) {
+				dao.insertUploadFile(f);
+                }
+		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
-
 		response.sendRedirect("list.action");
-		
 	}
-
 }
 
 
