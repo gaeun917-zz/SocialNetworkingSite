@@ -29,48 +29,46 @@ import com.team5.dto.UploadFile;
 @WebServlet("/board/updatecomment.action")
 public class BoardUpdateCommentServlet extends HttpServlet {
 
-	@Override
-	protected void doGet(
-		HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
-		// 코멘트를 데이터 베이스에 저장하고, 이걸 화면에 구현하는게 어려움 
-		//1. 데이터 읽기
-			String boardNo = request.getParameter("boardno");
-			if(boardNo==null && boardNo.length()==0){
-				response.sendRedirect("list.action");//없으면 목록으로 이동
-				return;
-			}
-		// 코멘트 넘버 읽기 (boardDeleteComment 에서 가져옴 ) 	
-			String commentNo = request.getParameter("commentno");
-			if(commentNo==null && commentNo.length()==0){
-				response.sendRedirect("list.action");//없으면 목록으로 이동
-				return;
-			}	
-			// commentNo를 정수로 바꿔줌 
-			int iCommentNo = Integer.parseInt(commentNo);	
-			int iBoardNo = Integer.parseInt(boardNo);
-			String content = request.getParameter("content");
-			
-			BoardComment comment = new BoardComment();
-			comment.setCommentNo(iCommentNo);
-			comment.setContent(content);
-			
-			//2. 데이터 insert 
-			BoardDao dao = new BoardDao();
-			dao.updateComment(comment);
-			//3. detail로 이동 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-			response.sendRedirect("list.action?boardno=" +iBoardNo);
-	}
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-		throws ServletException, IOException {
-		
-		req.setCharacterEncoding("utf-8");
-		
-		doGet(req, resp);
-	}
-	
+        //1. 보드 넘버 & 코멘트 넘버 읽기
+        String boardNo = request.getParameter("boardno");
+        if (boardNo == null && boardNo.length() == 0) {
+            response.sendRedirect("list.action");//없으면 목록으로 이동
+            return;
+        }
+        int iBoardNo = Integer.parseInt(boardNo);
+
+        String commentNo = request.getParameter("commentno");
+        if (commentNo == null && commentNo.length() == 0) {
+            response.sendRedirect("list.action");//없으면 목록으로 이동
+            return;
+        }
+        int iCommentNo = Integer.parseInt(commentNo);
+
+        //2. 데이터에서 코멘트 업데이트
+        BoardComment comment = new BoardComment();
+        comment.setCommentNo(iCommentNo); //2.1 comment에 number 저장
+
+        String content = request.getParameter("content");
+        comment.setContent(content); //2.2 comment에 content 저장
+
+        BoardDao dao = new BoardDao();
+        dao.updateComment(comment); //2.3 DB에서 comment 업데이트
+
+        //3. redirect
+        response.sendRedirect("list.action?boardno=" + iBoardNo);
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
+        doGet(req, resp);
+    }
 }
 
 

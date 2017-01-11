@@ -30,45 +30,41 @@ import com.team5.dto.UploadFile;
 public class BoardWriteCommentServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(
-		HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
-		// 코멘트를 데이터 베이스에 저장하고, 이걸 화면에 구현하는게 어려움 
-		//1. 데이터 읽기
-			String boardNo = request.getParameter("boardno");
-			if(boardNo==null && boardNo.length()==0){
-				response.sendRedirect("list.action");//없으면 목록으로 이동
-				return;
-			}
-			// 입력으로 넘어옴 
-			int iBoardNo = Integer.parseInt(boardNo);
-			//int pageNo = (int)request.getAttribute("pageno");
-			String content = request.getParameter("content");
-			//작성자
-			Member member = (Member)request.getSession().getAttribute("loginuser");	
-			BoardComment comment = new BoardComment();
-			comment.setWriter(member.getName());
-			comment.setMemberId(member.getMemberId());
-			comment.setBoardNo(iBoardNo);
-			comment.setContent(content);
-			
-						
-			//2. 데이터 insert 
-			BoardDao dao = new BoardDao();
-			dao.insertComment(comment);
-			//3. detail로 이동 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+						throws ServletException, IOException {
 
-			response.sendRedirect("list.action?boardno=" +boardNo);
+		//1. get data (boardNo, content, member(writer), comment)
+		String boardNo = request.getParameter("boardno");
+		if(boardNo==null && boardNo.length()==0){
+			response.sendRedirect("list.action");//없으면 목록으로 이동
+			return;
+		}
+		int iBoardNo = Integer.parseInt(boardNo);
+
+		String content = request.getParameter("content");
+		Member member = (Member)request.getSession().getAttribute("loginuser");
+
+		//2. set data
+		BoardComment comment = new BoardComment();
+					 comment.setWriter(member.getName());
+					 comment.setMemberId(member.getMemberId());
+					 comment.setBoardNo(iBoardNo);
+					 comment.setContent(content);
+						
+		//2. data insert
+		BoardDao dao = new BoardDao();
+		dao.insertComment(comment);
+
+		//3. redirect to board (detail view)
+		response.sendRedirect("list.action?boardno=" +boardNo);
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
-		
 		req.setCharacterEncoding("utf-8");
-		
 		doGet(req, resp);
 	}
-	
 }
 
 

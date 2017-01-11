@@ -29,45 +29,36 @@ import com.team5.dto.UploadFile;
 public class BoardUpdateServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(
-		HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+						throws ServletException, IOException {
 
 		//1. 데이터 읽기
 		String boardNo = request.getParameter("boardno");
-		//정수로 바꿔줄려고 
 		int iBoardNo = Integer.parseInt(boardNo);
-		System.out.println(iBoardNo);
 		String title = request.getParameter("title");
 		String content = request.getParameter("boardupdatecontent");
-		System.out.println(content);
-		Member member = 
-			(Member)request.getSession().getAttribute("loginuser");
-		int memberId = member.getMemberId();
-		System.out.println(memberId);
-		//2. 데이터 저장
+		Member member = (Member)request.getSession().getAttribute("loginuser");
+		int memberId = member.getMemberId();//2. 데이터 저장
+
+		//2. 보드 넘버 & content 구하기
 		Board board = new Board();
 		board.setBoardNo(iBoardNo);
-		/*board.setTitle(title);*/
-		/*board.setWriter(memberId);*/
 		board.setContent(content);
-		
+
+		//3. DB에 update 적용
 		BoardDao dao = new BoardDao();
 		dao.updateBoard(board);			
 		
-		//3. 목록으로 이동
+		//4. board로 이동
 		response.sendRedirect("list.action?boardno=" +boardNo);
-		
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
-		
 		req.setCharacterEncoding("utf-8");
-		
 		doGet(req, resp);
 	}
-	
 }
 
 
