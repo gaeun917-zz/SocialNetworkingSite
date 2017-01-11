@@ -22,13 +22,14 @@ import com.team5.dto.Upload;
 public class BoardDetailServlet extends HttpServlet {
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+						throws ServletException, IOException {
 		
-		//1. 요청 데이터 읽기 (상세 정보를 표시할 자료 번호)
-		//   읽지 못하면 리스트로 이동
+		//1. 요청 데이터 읽기
 		String BoardNo = req.getParameter("boardno");
 		if(BoardNo == null || BoardNo.length() == 0) {
-			resp.sendRedirect("/demoweb/board/list.action");
+			resp.sendRedirect("/demoweb/board/list.action");//읽지 못하면 리스트로 이동
+
 			return;
 		}
 		//문자열을 숫자로 변경

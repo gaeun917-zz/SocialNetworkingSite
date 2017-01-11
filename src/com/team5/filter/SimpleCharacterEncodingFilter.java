@@ -19,21 +19,7 @@ public class SimpleCharacterEncodingFilter implements Filter {
 
     public SimpleCharacterEncodingFilter() {
     }
-	public void destroy() {
-	}
-	public void doFilter(
-		ServletRequest request, 
-		ServletResponse response, 
-		FilterChain chain) throws IOException, ServletException {
-		
-		HttpServletRequest req = (HttpServletRequest)request;
-		
-		if (req.getMethod().equalsIgnoreCase("post")) {
-			//req.setCharacterEncoding("utf-8");
-			req.setCharacterEncoding(encoding);
-		}
-		chain.doFilter(request, response);
-	}
+
 	String encoding;
 	public void init(FilterConfig config) throws ServletException {
 		//filter 설정의 init-param 항목에서 데이터 읽기
@@ -41,6 +27,20 @@ public class SimpleCharacterEncodingFilter implements Filter {
 		if (encoding == null || encoding.length() == 0) {
 			encoding = "utf-8";
 		}
+	}
+
+	public void doFilter(ServletRequest request, ServletResponse response,
+						 FilterChain chain) throws IOException, ServletException {
+		
+		HttpServletRequest req = (HttpServletRequest)request;
+		if (req.getMethod().equalsIgnoreCase("post")) {
+			//req.setCharacterEncoding("utf-8");
+			req.setCharacterEncoding(encoding);
+		}
+		chain.doFilter(request, response);
+	}
+
+	public void destroy() {
 	}
 
 }

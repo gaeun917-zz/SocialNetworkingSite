@@ -29,13 +29,10 @@ import com.team5.dto.UploadFile;
 public class BoardDeleteServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(
-		HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
-
-		//1. 데이터 읽기
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+						throws ServletException, IOException {
+			//1. 데이터 읽기
 			String boardNo = request.getParameter("boardno");
-			System.out.println(boardNo);
 			if(boardNo==null && boardNo.length()==0){
 				response.sendRedirect("list.action");//없으면 목록으로 이동
 				return;
@@ -44,24 +41,19 @@ public class BoardDeleteServlet extends HttpServlet {
 			
 			//2. 데이터 삭제 
 			BoardDao dao = new BoardDao();
-			dao.deleteBoard(iBoardNo);
-			
-			
-			
+			dao.deleteBoard(iBoardNo);// 해당 Board 삭제: 삭제된 data는 DB에서 1로 표시
 			
 			//3. 목록으로 이동 (특정 페이지로 이동)
-			response.sendRedirect("list.action");// 삭제된 데이터는 데이터 베이스에서  1로 표시됨 
-		//
+			response.sendRedirect("list.action");
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-		throws ServletException, IOException {
+						throws ServletException, IOException {
 		
 		req.setCharacterEncoding("utf-8");
-		
 		doGet(req, resp);
 	}
-	
 }
 
 
