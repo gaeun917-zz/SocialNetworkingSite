@@ -24,13 +24,13 @@ public class BoardDeleteCommentServlet extends HttpServlet {
         String commentNo = request.getParameter("commentno");
         String boardNo = request.getParameter("boardno");
 
-        if (commentNo == null && commentNo.length() == 0) {
+        if (commentNo == null || commentNo.length() == 0) {
             response.sendRedirect("list.action");//# 없으면 목록으로 이동
             return;
         }
         int iCommentNo = Integer.parseInt(commentNo);
 
-        if (boardNo == null && boardNo.length() == 0) {
+        if (boardNo == null || boardNo.length() == 0) {
             response.sendRedirect("list.action");//없으면 목록으로 이동
             return;
         }

@@ -33,7 +33,7 @@ public class BoardDeleteServlet extends HttpServlet {
 						throws ServletException, IOException {
 			//1. 데이터 읽기
 			String boardNo = request.getParameter("boardno");
-			if(boardNo==null && boardNo.length()==0){
+			if(boardNo==null || boardNo.length()==0){
 				response.sendRedirect("list.action");//없으면 목록으로 이동
 				return;
 			}
