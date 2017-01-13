@@ -1,8 +1,6 @@
 ﻿package com.team5.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -39,9 +37,6 @@ public class ConnectionHelper {
 	//			conn = DriverManager.getConnection(
 	//				"jdbc:mysql://172.16.2.1:3306/demoweb",//-->서버/DB 정보 
 	//				"devadmin", "mysql");//계정 정보
-				
-				
-				
 			} catch (Exception ex) {
 			}
 		}

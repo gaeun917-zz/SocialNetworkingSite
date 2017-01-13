@@ -3,12 +3,12 @@
 <!-- context.xml : Web Application 설정을 작성하는 파일 -->
 <Context path="/team5" reloadable="true">
 
-	<!-- web application에서 사용할 수 있는 컨테이너 자원 등록 -->
-	<Resource name="jdbc/team5" auth="Container"
-              type="javax.sql.DataSource" 
+    <!-- web application에서 사용할 수 있는 컨테이너 자원 등록 -->
+    <Resource name="jdbc/team5" auth="Container"
+              type="javax.sql.DataSource"
+
               driverClassName="oracle.jdbc.OracleDriver"
               url="jdbc:oracle:thin:@210.16.214.202:1521:xe"
-              username="team5" password="team5" 
+              username="team5" password="team5"
               maxTotal="20" maxIdle="10" maxWaitMillis="-1"/>
-
 </Context>

@@ -1,7 +1,4 @@
-<%@page import="com.team5.dto.BoardComment"%>
-<%@page import="com.team5.dto.Member"%>
 <%@page import="com.team5.dto.Board"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html;charset=utf-8"
 	pageEncoding="utf-8" session="true"%>
 
