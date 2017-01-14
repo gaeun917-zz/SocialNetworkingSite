@@ -200,13 +200,6 @@
                     </div>
 
 
-                    <!--------------------------------------------------------------------------------------->
-                    <!-- -------이가은의 소중한 코드입니다. 바꿀 때는 꼭 말해주시고 바꾸세요!!!-------------->
-                    <!-- -------이가은의 소중한 코드입니다. 바꿀 때는 꼭 말해주시고 바꾸세요!!!-------------->
-                    <!-- -------이가은의 소중한 코드입니다. 바꿀 때는 꼭 말해주시고 바꾸세요!!!-------------->
-                    <!-- -------이가은의 소중한 코드입니다. 바꿀 때는 꼭 말해주시고 바꾸세요!!!-------------->
-
-
                     <c:if test="${not empty board.comments}">
                         <!-- comment 표시 영역 -->
 
@@ -233,10 +226,8 @@
                                             </c:if>
 
                                             <div style="display: ${display}">
-                                                <a
-                                                        href="javascript:toggleCommentStatus(${boardComment.commentNo}, true);">편집</a>
-                                                &nbsp; <a
-                                                    href="javascript:deleteComment(${boardComment.commentNo}, ${ board.boardNo })">삭제</a>
+                                                <a href="javascript:toggleCommentStatus(${boardComment.commentNo}, true);">편집</a>
+                                                &nbsp; <a href="javascript:deleteComment(${boardComment.commentNo}, ${ board.boardNo })">삭제</a>
                                             </div>
                                         </div>
 

@@ -2,13 +2,11 @@ package com.team5.dto;
 
 public class UploadFile {
 
-    private int upfileNo;
+    private int upfileNo;//PK
     private int boardNo;//FK
     private int memberId;//FK
     private String savedFileName;
     private String userFileName;
-
-
 
 
     public int getUpfileNo() {
