@@ -700,7 +700,7 @@ public class MemberDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ArrayList<MemberInfo> memberInfos=new ArrayList<>();
+		ArrayList<MemberInfo> memberInfos = new ArrayList<>();
 
 		try {
 			conn = ConnectionHelper.getConnection("oracle");

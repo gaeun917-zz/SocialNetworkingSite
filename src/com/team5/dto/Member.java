@@ -79,7 +79,6 @@ public class Member {
         this.profilePic = profilePic;
     }
 
-
     public String getProfile_pic() {
         return Profile_pic;
     }
