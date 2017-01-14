@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
-
 import com.team5.dto.Board;
 import com.team5.dto.BoardComment;
 
