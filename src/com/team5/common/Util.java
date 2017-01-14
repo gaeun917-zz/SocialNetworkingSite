@@ -26,14 +26,12 @@ public class Util {
 		byte[] hashedData = null;
 		
 		try {
-			//암호화 처리 인스턴스 생성
-			MessageDigest md = 
-				MessageDigest.getInstance(algorithm);
+			MessageDigest md = 	//암호화 처리 인스턴스 생성
+					MessageDigest.getInstance(algorithm);
 			hashedData = md.digest(source.getBytes());//지정된 알고리즘으로 암호화
 		} catch (NoSuchAlgorithmException ex) {	
 			hashedData = null;
 		}
-		
 		return hashedData;
 	}
 	
@@ -73,42 +71,45 @@ public class Util {
 	public static String getUniqueFileName(String path, String fileName)
     {	
         String name =
-            fileName.substring(0, fileName.lastIndexOf("."));
+            		fileName.substring(0, fileName.lastIndexOf("."));
         String ext =
-            fileName.substring(fileName.lastIndexOf("."));
+            		fileName.substring(fileName.lastIndexOf("."));
         int index = 1;
+
         while (true) {
         	File file = 
-        		new File(path + "\\" + name + "_" + index + ext);
-        	if (file.exists())
-        		index++;
-        	else
-        		break;
+        			new File(path + "\\" + name + "_" + index + ext);
+        	if (file.exists()) {
+				index++;
+			}else{
+				break;
+			}
         }
-
         return name + "_" + index + ext;
     }
-	
+
+
 	/**
 	 * 고유한 파일 이름을 만드는 메서드
 	 * @param fileName
 	 * @return
 	 */
 	public static String getUniqueFileName(String fileName)
-    {   
-        String ext =
-            fileName.substring(fileName.lastIndexOf("."));
-        
-        String name = UUID.randomUUID().toString();
+    {
 
+		String name = UUID.randomUUID().toString();
+
+		String ext =
+           		 fileName.substring(fileName.lastIndexOf("."));
+        
         return name + ext;
     }
 	
 	///////////////////////////////////////////////////
 	
-	public static String makeQueryString(
-		String queryString, String toAdd, String[] toRemove, String encoding)
-		throws UnsupportedEncodingException {
+	public static String makeQueryString(String queryString, String toAdd,
+										 String[] toRemove, String encoding)
+							throws UnsupportedEncodingException {
 		
 		if (queryString == null || queryString.length() == 0) {
 			return null;
@@ -155,5 +156,4 @@ public class Util {
 		
 		return sb.toString();
 	}
-
 }

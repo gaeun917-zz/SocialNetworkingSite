@@ -44,6 +44,24 @@ body {
     padding-left: 5px;
 }
 
+#list-table-comment {
+    width: 400px;
+    border: solid 1px;
+    margin: 0 auto;
+}
+
+#list-table-td-comment {
+    text-align: left;
+    margin: 5px;
+    border-bottom: solid 1px;
+}
+
+#list-table-commentForm {
+    width: 400px;
+    border: solid 1px;
+    margin: 0 auto;
+}
+
 #header {
     background-color: #465B99;
     color: #ffffff;

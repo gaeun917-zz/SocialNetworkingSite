@@ -20,6 +20,7 @@ public class SimpleCharacterEncodingFilter implements Filter {
     public SimpleCharacterEncodingFilter() {
     }
 
+
 	String encoding;
 	public void init(FilterConfig config) throws ServletException {
 		//filter 설정의 init-param 항목에서 데이터 읽기
@@ -28,6 +29,7 @@ public class SimpleCharacterEncodingFilter implements Filter {
 			encoding = "utf-8";
 		}
 	}
+
 
 	public void doFilter(ServletRequest request, ServletResponse response,
 						 FilterChain chain) throws IOException, ServletException {
@@ -40,9 +42,9 @@ public class SimpleCharacterEncodingFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
+
 	public void destroy() {
 	}
-
 }
 
 

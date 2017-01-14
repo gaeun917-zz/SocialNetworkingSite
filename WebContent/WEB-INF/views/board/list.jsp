@@ -56,7 +56,7 @@
                 v2.style.display = edit ? 'block' : 'none';
                 e2.style.display = edit ? 'none' : 'block';
 
-            }else{
+            } else {
 
                 v2.style.display = edit ? 'none' : 'block';
                 e2.style.display = edit ? 'block' : 'none';
@@ -165,117 +165,110 @@
                     <div class="buttons">
                         <c:choose>
                             <c:when test="${loginuser.memberId == board.memberId}">
-                                <a href='javascript:doDelete(${board.boardNo})'><span
-                                        class="glyphicon glyphicon-trash"></span> 삭제</a>&nbsp;&nbsp;
+                                <a href='javascript:
+                                                    doDelete(${board.boardNo})'>
+                                    <span class="glyphicon glyphicon-trash"></span> 삭제</a>&nbsp;&nbsp;
                                 <a id="boardeditlink${board.boardNo}"
-                                   href='javascript:toggleBoardStatus(${board.boardNo},true)'>
+                                   href='javascript:
+                                                    toggleBoardStatus(${board.boardNo},true)'>
                                     <span class="glyphicon glyphicon-scissors"></span> 편집</a>&nbsp;&nbsp;
                                 <a id="boardcancellink${board.boardNo}"
-                                   href='javascript:toggleBoardStatus(${board.boardNo},false)'
-                                   style="display: none"><span class="glyphicon glyphicon-remove-circle"></span>취소</a>&nbsp;&nbsp;
+                                   href='javascript:
+                                                    toggleBoardStatus(${board.boardNo},false)'
+                                   style="display: none">
+                                    <span class="glyphicon glyphicon-remove-circle"></span>취소</a>&nbsp;&nbsp;
                                 <a id="boardupdatelink${board.boardNo}"
-                                   href="javascript:document.getElementById('boardform').submit();"
-                                   style="display: none"><span class="glyphicon glyphicon-ok-circle"></span>수정</a>&nbsp;&nbsp;
+                                   href="javascript:
+                                            document.getElementById('boardform').submit();"
+                                   style="display: none">
+                                    <span class="glyphicon glyphicon-ok-circle"></span>수정</a>&nbsp;&nbsp;
                             </c:when>
                             <c:otherwise></c:otherwise>
                         </c:choose>
-
                     </div>
 
                     <div>
                         <form id="commentform" action="writecomment.action" method="post">
                             <input type="hidden" name="boardno" value="${board.boardNo}"/>
-
-                            <table style="width: 400px; border: solid 1px; margin: 0 auto">
+                            <table id="list-table-commentForm">
                                 <tr>
-                                    <td style="width: 400px"><textarea name="content"
-                                                                       style="width: 350px" rows="3"></textarea></td>
-                                    <td style="width: 50px; vertical-align: middle"><a
-                                            href="javascript:document.getElementById('commentform').submit();"
-                                            style="text-decoration: none"> 댓글<br/>등록
-                                    </a></td>
+                                    <td style="width: 400px">
+                                        <textarea name="content" style="width: 350px" rows="3"></textarea>
+                                    </td>
+                                    <td style="width: 50px; vertical-align: middle">
+                                        <a style="text-decoration: none"
+                                           href="javascript:
+                                                    document.getElementById('commentform').submit();"> 댓글<br/>등록
+                                        </a>
+                                    </td>
                                 </tr>
                             </table>
                         </form>
                     </div>
 
-
+                    <!-- comment 표시 영역 -->
                     <c:if test="${not empty board.comments}">
-                        <!-- comment 표시 영역 -->
-
-
-                        <table style="width: 400px; border: solid 1px; margin: 0 auto">
-
+                        <table id="list-table-comment">
                             <c:forEach var="boardComment" items="${ board.comments }">
                                 <tr>
-                                    <td style="text-align: left; margin: 5px; border-bottom: solid 1px">
-
+                                    <td id="list-table-td-comment">
                                         <div id='commentview${boardComment.commentNo}'>
                                                 ${boardComment.writer} &nbsp;&nbsp; [${boardComment.regDate}]
-                                            <br/> <br/> <span> <c:set var="res2"
-                                                                      value="${fn:replace(boardComment.content, rn, br)}"/>
-											${fn:replace(res2, space, nbsp)}
-										</span> <br/> <br/>
-
+                                            <br/><br/>
+                                            <span>
+                                                <c:set var="res2" value="${fn:replace(boardComment.content, rn, br)}"/>
+										        	${fn:replace(res2, space, nbsp)}
+										    </span>
+                                            <br/><br/>
                                             <c:set var="display" value=""/>
-                                            <c:if test="${loginuser.memberId==boardComment.memberId}">
+                                            <c:if test="${loginuser.memberId == boardComment.memberId}">
                                                 <c:set var="display" value="block"/>
                                             </c:if>
-                                            <c:if test="${loginuser.memberId!=boardComment.memberId}">
+                                            <c:if test="${loginuser.memberId != boardComment.memberId}">
                                                 <c:set var="display" value="none"/>
                                             </c:if>
 
                                             <div style="display: ${display}">
-                                                <a href="javascript:toggleCommentStatus(${boardComment.commentNo}, true);">편집</a>
-                                                &nbsp; <a href="javascript:deleteComment(${boardComment.commentNo}, ${ board.boardNo })">삭제</a>
+                                                <a href="javascript:
+                                                               toggleCommentStatus(${boardComment.commentNo}, true);">편집</a>&nbsp;
+                                                <a href="javascript:
+                                                               deleteComment(${boardComment.commentNo} , ${ board.boardNo })">삭제</a>
                                             </div>
                                         </div>
 
-                                        <div id='commentedit${boardComment.commentNo}'
-                                             style="display: none">
+                                        <div id='commentedit${boardComment.commentNo}' style="display: none">
                                                 ${boardComment.writer}&nbsp;&nbsp; [${boardComment.regDate}]
-                                            <br/> <br/>
+                                            <br/><br/>
 
                                             <form id="commenteditform${boardComment.commentNo}"
                                                   action="updatecomment.action" method="post">
-                                                <input type="hidden" name="boardno"
-                                                       value="${ board.boardNo }"/> <input type="hidden"
-                                                                                           name="commentno"
-                                                                                           value="${boardComment.commentNo}"/>
-                                                <textarea name="content" style="width: 350px" rows="3"
-                                                          maxlength="200">
+                                                <input type="hidden" name="boardno" value="${ board.boardNo }"/>
+                                                <input type="hidden" name="commentno" value="${boardComment.commentNo}"/>
+                                                <textarea name="content" style="width: 350px" rows="3" maxlength="200">
                                                         ${boardComment.content}
                                                 </textarea>
                                             </form>
-
-                                            <br/>
+                                            <br/><br/>
                                             <div>
-                                                <a
-                                                        href="javascript:document.getElementById('commenteditform${boardComment.commentNo}').submit();">수정</a>
-                                                &nbsp;
                                                 <!-- 위에있는 form의 id값을 이용해서 submit함 -->
-                                                <a
-                                                        href="javascript:toggleCommentStatus(${boardComment.commentNo}, false);">취소</a>
+                                                <a href="javascript:
+                                                            document.getElementById('commenteditform${boardComment.commentNo}').submit();">수정</a>  &nbsp;
+                                                <a href="javascript:
+                                                            toggleCommentStatus(${boardComment.commentNo}, false);">취소</a>
                                             </div>
                                         </div>
-
                                     </td>
                                 </tr>
-
                             </c:forEach>
                         </table>
-                        <br/>
-                        <br/>
-                        <br/>
+                        <br/><br/><br/>
                         <hr align="center" style="width: 500px;"/>
                     </c:if>
                     <br/>
                 </td>
             </tr>
-
         </c:forEach>
     </table>
 </div>
-
 </body>
 </html>

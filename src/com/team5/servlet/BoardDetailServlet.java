@@ -35,6 +35,7 @@ public class BoardDetailServlet extends HttpServlet {
                 return;
             }
             int iBoardNo = Integer.parseInt(BoardNo); //String to Integer
+
             //1.2 페이지 넘버 구하기
             int currentPage = 1; //현재 페이지 번호
             if (pageNo != null && pageNo.length() > 0) {
