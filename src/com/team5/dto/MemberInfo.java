@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class MemberInfo {
 
-    private int memberId;//PK & FK
+    private int memberId;//PK & FK 이렇게되면, FK를 주게된 Member table이 삭제되면 memberInfo도 PK없어져서 데이터 같이 잃음
     private String location;
     private String highschool;
     private String university;
