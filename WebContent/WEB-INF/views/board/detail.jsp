@@ -19,11 +19,10 @@
         <div id="inputcontent">
             <div id="inputmain">
                 <div class="inputsubtitle">게시판 글 내용</div>
-
+                <%-- Board dto에서 데이터 데이터를 가져옴 --%>
                 <%
                     Board b = (Board) request.getAttribute("board");
                 %>
-
                 <table>
                     <tr>
                         <th>제목</th>

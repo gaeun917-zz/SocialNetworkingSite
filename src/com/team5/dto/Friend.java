@@ -4,12 +4,18 @@ import java.sql.Date;
 
 public class Friend {
 	
-	private int friend_id;
+	private int friend_id;//PK
 	private int friendOne;	
 	private int friendTwo;
 	private int status;
 	private Date createDate;
-	
+
+	public int getFriend_id() {
+		return friend_id;
+	}
+	public void setFriend_id(int friend_id) {
+		this.friend_id = friend_id;
+	}
 	public int getFriendOne() {
 		return friendOne;
 	}
@@ -34,12 +40,5 @@ public class Friend {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public int getFriend_id() {
-		return friend_id;
-	}
-	public void setFriend_id(int friend_id) {
-		this.friend_id = friend_id;
-	}
-	
-	
+
 }

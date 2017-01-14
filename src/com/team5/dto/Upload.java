@@ -15,9 +15,8 @@ public class Upload implements Serializable {
 	private Date regDate;
 	private int readCount;
 	
-	//데이터베이스의 테이블간 1(Upload) : Many(UploadFile) 관계를 구현한 필드
+	//(Upload):(UploadFile) = 1: Many 관계를 구현한 필드
 	private ArrayList<UploadFile> files;
-	
 	public Upload() {}
 	
 	public int getUploadNo() {

@@ -1,11 +1,13 @@
 package com.team5.dto;
 
 public class BoardLike {
-	
-	private int likeId;
-	private int boardNo;
+
+	private int likeId;//PK
+	private int boardNo;//FK
+	private int memberId;//FK
 	private int likeStatus;
-	private int memberId;
+
+
 	public int getLikeId() {
 		return likeId;
 	}

@@ -1,12 +1,13 @@
 package com.team5.dto;
 
 public class CommentLike {
-	
-	private int likeId;
+	// BoardLik & CommentLik
+	private int likeId;//PK
+	private int commentNo;//FK
+	private int memberId;//FK
 	private int likeStatus;
-	private int commentNo;
-	private int memberId;
-	
+
+
 	public int getLikeId() {
 		return likeId;
 	}
