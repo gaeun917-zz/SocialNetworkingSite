@@ -28,11 +28,13 @@
                     <input class="form-control" type="text" id="name" name="name"
                            placeholder="Name"/>
                 </div>
+
                 <div class="form-group">
                     <label class="col-sm-12" for="email">이메일</label>
                     <input class="form-control" type="text" id="email" name="email"
                            placeholder="Email"/>
                 </div>
+
                 <div class="form-group">
                     <label class="col-sm-12" for="passwd">비밀번호</label>
                     <input class="form-control" type="password" id="passwd" name="passwd"
@@ -66,5 +68,3 @@
 <script src="js/script.js"></script>
 </body>
 </html>
-
-
