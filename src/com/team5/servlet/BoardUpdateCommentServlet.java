@@ -33,13 +33,15 @@ public class BoardUpdateCommentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //1. 보드 넘버 & 코멘트 넘버 읽기
+        //1. get/set data
+        //boardNo는 redirect할 때 쓰려고 parsing함
         String boardNo = request.getParameter("boardno");
         if (boardNo == null && boardNo.length() == 0) {
             response.sendRedirect("list.action");//없으면 목록으로 이동
             return;
         }
         int iBoardNo = Integer.parseInt(boardNo);
+
 
         String commentNo = request.getParameter("commentno");
         if (commentNo == null && commentNo.length() == 0) {
@@ -48,17 +50,21 @@ public class BoardUpdateCommentServlet extends HttpServlet {
         }
         int iCommentNo = Integer.parseInt(commentNo);
 
-        //2. 데이터에서 코멘트 업데이트
-        BoardComment comment = new BoardComment();
-        comment.setCommentNo(iCommentNo); //2.1 comment에 number 저장
-
         String content = request.getParameter("content");
-        comment.setContent(content); //2.2 comment에 content 저장
 
+
+        //2. BoardComment object에 CommentNo, content set하기: 아직 DB에 적용된거 아님
+        BoardComment comment = new BoardComment();
+                     comment.setCommentNo(iCommentNo); //2.1 comment에 number 저장
+                     comment.setContent(content); //2.2 comment에 content 저장
+
+
+        //3. update DB
         BoardDao dao = new BoardDao();
-        dao.updateComment(comment); //2.3 DB에서 comment 업데이트
+                 dao.updateComment(comment); //2.3 DB에서 comment 업데이트
 
-        //3. redirect
+
+        //4. redirect: boardno로 해당 보드 보여줌
         response.sendRedirect("list.action?boardno=" + iBoardNo);
     }
 

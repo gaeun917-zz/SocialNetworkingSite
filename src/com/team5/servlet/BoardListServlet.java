@@ -53,9 +53,9 @@ public class BoardListServlet extends HttpServlet {
 		//2. 목록 데이터 조회
 		BoardDao dao = new BoardDao();
 		List<Board> boards = dao.selectBoardList();
-		//3. 조회된 데이터를 Request에 저장
 		req.setAttribute("boards", boards);
 
+		//3. 조회된 데이터를 Request에 저장
 		UploadDao updao = new UploadDao();
 		List<UploadFile> uploads = updao.selectAllUploadFiles();
 		req.setAttribute("uploads", uploads);

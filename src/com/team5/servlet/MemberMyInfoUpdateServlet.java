@@ -37,9 +37,11 @@ public class MemberMyInfoUpdateServlet extends HttpServlet {
 					memberinfo.setPhone(phone);
 
 		MemberDao dao = new MemberDao();
-		dao.updateMemberInfo(memberinfo ,iMemberId);
+				  dao.updateMemberInfo(memberinfo ,iMemberId);
 
 		//3. redirect to personal page
+		// .jsp가 아니라 memberinfo.action으로 parameter로 memberId 가지고
+		// 	MemberMyInfoServlet으로 redirect해서 거기 거치고 .jsp로 이동
 		resp.sendRedirect("memberinfo.action?memberid="+ memberId);
 	}
 

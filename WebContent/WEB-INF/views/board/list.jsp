@@ -94,8 +94,7 @@
             <div id="inputmain">
 
 
-                <form action="write.action" method="POST"
-                      enctype="multipart/form-data">
+                <form action="write.action" method="POST" enctype="multipart/form-data">
                     <%
                         Board board = (Board) request.getAttribute("board");
                     %>
@@ -239,6 +238,8 @@
                                         <div id='commentedit${boardComment.commentNo}' style="display: none">
                                                 ${boardComment.writer}&nbsp;&nbsp; [${boardComment.regDate}]
                                             <br/><br/>
+
+
 
                                             <form id="commenteditform${boardComment.commentNo}"
                                                   action="updatecomment.action" method="post">

@@ -16,8 +16,6 @@
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 	<div id="pageContainer">
 
-
-
 		<div style="padding-top: 25px; text-align: center">
 			<div id="inputcontent">
 				<div id="inputmain">

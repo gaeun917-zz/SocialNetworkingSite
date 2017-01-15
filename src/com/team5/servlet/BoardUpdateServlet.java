@@ -35,6 +35,7 @@ public class BoardUpdateServlet extends HttpServlet {
 		//1. 데이터 읽기
 		String boardNo = request.getParameter("boardno");
 		int iBoardNo = Integer.parseInt(boardNo);
+
 		String title = request.getParameter("title");
 		String content = request.getParameter("boardupdatecontent");
 		Member member = (Member)request.getSession().getAttribute("loginuser");
@@ -42,12 +43,12 @@ public class BoardUpdateServlet extends HttpServlet {
 
 		//2. 보드 넘버 & content 구하기
 		Board board = new Board();
-		board.setBoardNo(iBoardNo);
-		board.setContent(content);
+			  board.setBoardNo(iBoardNo);
+		      board.setContent(content);
 
 		//3. DB에 update 적용
 		BoardDao dao = new BoardDao();
-		dao.updateBoard(board);			
+				 dao.updateBoard(board);
 		
 		//4. board로 이동
 		response.sendRedirect("list.action?boardno=" +boardNo);

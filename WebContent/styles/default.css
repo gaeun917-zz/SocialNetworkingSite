@@ -62,6 +62,18 @@ body {
     margin: 0 auto;
 }
 
+#detail-body-div {
+    padding-top: 25px;
+    text-align: center;
+    align: center;
+}
+
+#detail-body-div-table-div {
+    padding-top: 25px;
+    text-align: center;
+    align: center;
+}
+
 #header {
     background-color: #465B99;
     color: #ffffff;
