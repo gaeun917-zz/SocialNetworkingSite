@@ -74,6 +74,44 @@ body {
     align: center;
 }
 
+#friendEdit-div {
+    padding-top: 25px;
+    text-align: center;
+    align: center;
+}
+
+#friendEdit-div-form-table {
+    width: 400px;
+    border: solid 1px;
+    margin: 0 auto;
+}
+
+#friendEdit-div-table1 {
+    width: 400px;
+    border: solid 1px;
+    margin: 0 auto;
+}
+
+#friendEdit-div-table-td {
+    text-align: left;
+    margin: 5px;
+    border-bottom: solid 1px;
+}
+
+#detail-body-div-table-div {
+    padding-top: 25px;
+    text-align: center;
+    align: center;
+}
+
+#information-div-div {
+    padding-top: 25px;
+    text-align: center;
+}
+
+
+
+
 #header {
     background-color: #465B99;
     color: #ffffff;
