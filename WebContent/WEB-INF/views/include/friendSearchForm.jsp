@@ -10,25 +10,27 @@
 </head>
 <body>
 
-<div class="col-md-offset-2 btn-lg">
-    <h4>학교/지역 : ${param.search}</h4>
-</div>
-<div class="col-md-offset-2 btn-lg">
-    <h4>알수도 있는 친구</h4>
-</div>
+    <div class="col-md-offset-2 btn-lg">
+        <h4>학교/지역 : ${param.search}</h4>
+    </div>
 
-<div class="row">
-    <c:forEach var="member" items="${searchByMember}">
-        <div class="col-md-offset-2">
-            <div class="col-md-4">
-                <span class="glyphicon glyphicon-user btn-lg"></span>
-                    ${member.name}<br>
-                <input type="button" value="친구요청" class="btn btn-primary"
-                       onclick="location.href='/team5/friend/friendSend.action?memberId=${member.memberId}'">
-                <br><br>
+    <div class="col-md-offset-2 btn-lg">
+        <h4>알수도 있는 친구</h4>
+    </div>
+
+    <div class="row">
+        <c:forEach var="member" items="${searchByMember}">
+            <div class="col-md-offset-2">
+                <div class="col-md-4">
+                    <span class="glyphicon glyphicon-user btn-lg"></span>
+                        ${member.name}<br>
+                    <input type="button" value="친구요청" class="btn btn-primary"
+                           onclick="location.href='/team5/friend/friendSend.action?memberId=${member.memberId}'">
+                    <br><br>
+                </div>
             </div>
-        </div>
-    </c:forEach>
-</div>
+        </c:forEach>
+    </div>
+
 </body>
 </html>

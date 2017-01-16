@@ -82,6 +82,7 @@
         <br/><br/>
 
         <!------------------ comment 쓰기 영역 시작 -------------------->
+
         <form id="commentform" action="writecomment.action" method="post">
             <input type="hidden" name="boardno" value="${board.boardNo}"/>
             <input type="hidden" name="pageno" value="${requestScope.pageNo}"/>
@@ -93,45 +94,20 @@
                     </td>
                     <td style="width: 50px; vertical-align: middle">
                         <a href="javascript:
-                                  document.getElementById('commentform').submit();">댓글등록</a>
+                                     document.getElementById('commentform').submit();">댓글등록</a>
                     </td>
                 </tr>
             </table>
         </form>
-        <!------------------- comment 쓰기 영역 끝 ------------------------->
+
+        <!------------------- no previous comment  ------------------------->
+
         <c:choose>
             <c:when test="${ empty board.comments }">
                 <h4 id="nodata">작성된 댓글이 없습니다.</h4>
             </c:when>
-
+            <!-------------- comment 표시 영역 ------------------------>
             <c:otherwise>
-                <!-------------- comment 표시 영역 ------------------------>
-                <script type="text/javascript">
-                    var view=null, edit = null;  // view와 edit 모두에 commentNo가 붙어 있음
-                    function toggleCommentStatus(commentNo, edit) {
-                        if (view != null) {
-                            //when view is on, view=display:block, edit=display:none
-                            view.style.display = edit ? 'block' : 'none';
-                            edit.style.display = edit ? 'none' : 'block';
-                        }
-                        view = document.getElementById("commentview" + commentNo);
-                        edit = document.getElementById("commentedit" + commentNo);
-
-                        view.style.display = edit ? 'none' : 'block';
-                        edit.style.display = edit ? 'block' : 'none';
-                    }
-
-                    //삭제하고 페이지 넘버 리프레쉬 할 때: "삭제할까요?" 메세지 보여줌
-                    function deleteComment(commentNo, boardNo) {
-                        var yes = confirm(commentNo + '번 댓글을 삭제할까요?'); // return 값이 yes이면 true
-                        if (yes) { // location.href : 주소창에 입력 + enter와 같음
-                            location.href = 'deletecomment.action?' +
-                                'commentno=' + commentNo
-                                + "&boardno=" + boardNo;
-                        }
-                    }
-                </script>
-
                 <table id="detailTable">
                     <c:forEach var="bcomment" items="${board.comments}">
                         <tr>
@@ -142,6 +118,7 @@
                                     <br/><br/>
                                     <span>${bcomment.content}</span>
                                     <br/><br/>
+
                                     <c:choose>
                                         <c:when test="${ loginuser.memberId == bcomment.memberId }">
                                             <%--var에 style= display toggle할 수 있게 value 저장 --%>
@@ -152,6 +129,7 @@
                                             <c:set var="display" value="${ none }"/>
                                         </c:otherwise>
                                     </c:choose>
+
                                     <div style="display: ${display}">
                                         <a href="javascript:
                                                  toggleCommentStatus(${bcomment.commentNo}, true);">편집</a> &nbsp;
@@ -159,6 +137,7 @@
                                         <a href="javascript:
                                                  deleteComment(${bcomment.commentNo}, ${bcomment.boardNo})">삭제</a>
                                     </div>
+
                                 </div>
 
                                 <div id='commentedit${bcomment.commentNo}' style="display: none">
@@ -169,11 +148,10 @@
                                           action="updatecomment.action" method="post">
                                         <input type="hidden" name="boardno" value="${board.boardNo}"/>
                                         <input type="hidden" name="commentno" value="${bcomment.commentNo}"/>
-                                        <textarea name="content" style="width: 600px" rows="3"
-                                                  maxlength="200">${bcomment.content}</textarea>
+                                        <textarea name="content" style="width: 600px" rows="3" maxlength="200">
+                                                    ${bcomment.content}
+                                        </textarea>
                                     </form>
-
-
 
 
                                     <div>
@@ -183,6 +161,7 @@
                                         <a href="javascript:
                                                     toggleCommentStatus(${bcomment.commentNo}, false);">취소</a>
                                     </div>
+
                                 </div>
                             </td>
                         </tr>

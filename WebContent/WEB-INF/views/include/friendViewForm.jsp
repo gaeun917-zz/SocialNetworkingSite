@@ -10,46 +10,46 @@
 </head>
 
 <body>
-<br><br>
-<div class="col-md-offset-2 btn-lg">
-    <h4>${loginuser.name}와친구인 사이</h4>
-</div>
+    <br><br>
+    <div class="col-md-offset-2 btn-lg">
+        <h4>${loginuser.name}와친구인 사이</h4>
+    </div>
 
-<div class="row">
-    <c:forEach var="friendInfos" items="${friendInfos}">
-        <c:forEach var="friends" items="${friends}">
-            <c:if test="${friends.memberId == friendInfos.memberId}">
-                <div class="col-md-offset-2">
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-user btn-lg" aria-hidden="true"></span>
-                            ${friends.name}<br>
-                        <input type="button" class="btn btn-primary" value="개인페이지로 이동"
-                               onclick="location.href='/team5/memberdetail/detail.action?memberid=${friends.memberId}'">
-                        <br><br>
+    <div class="row">
+        <c:forEach var="friendInfos" items="${friendInfos}">
+            <c:forEach var="friends" items="${friends}">
+                <c:if test="${friends.memberId == friendInfos.memberId}">
+                    <div class="col-md-offset-2">
+                        <div class="col-md-4">
+                            <span class="glyphicon glyphicon-user btn-lg" aria-hidden="true"></span>
+                                ${friends.name}<br>
+                            <input type="button" class="btn btn-primary" value="개인페이지로 이동"
+                                   onclick="location.href='/team5/memberdetail/detail.action?memberid=${friends.memberId}'">
+                            <br><br>
+                        </div>
                     </div>
-                </div>
-            </c:if>
+                </c:if>
+            </c:forEach>
         </c:forEach>
-    </c:forEach>
-</div>
+    </div>
 
 
-<div class="row">
-    <c:forEach var="friendInfos2" items="${friendInfos2}">
-        <c:forEach var="friends2" items="${friends2}">
-            <c:if test="${friends2.memberId == friendInfos2.memberId}">
-                <div class="col-md-offset-2">
-                    <div class="col-md-4">
-                        <span class="glyphicon glyphicon-user btn-lg" aria-hidden="true"></span>
-                            ${friends2.name}<br>
-                        <input type="button" class="btn btn-primary" value="개인페이지로 이동"
-                               onclick="location.href='/team5/memberdetail/detail.action?memberid=${friends2.memberId}'">
-                        <br><br>
+    <div class="row">
+        <c:forEach var="friendInfos2" items="${friendInfos2}">
+            <c:forEach var="friends2" items="${friends2}">
+                <c:if test="${friends2.memberId == friendInfos2.memberId}">
+                    <div class="col-md-offset-2">
+                        <div class="col-md-4">
+                            <span class="glyphicon glyphicon-user btn-lg" aria-hidden="true"></span>
+                                ${friends2.name}<br>
+                            <input type="button" class="btn btn-primary" value="개인페이지로 이동"
+                                   onclick="location.href='/team5/memberdetail/detail.action?memberid=${friends2.memberId}'">
+                            <br><br>
+                        </div>
                     </div>
-                </div>
-            </c:if>
+                </c:if>
+            </c:forEach>
         </c:forEach>
-    </c:forEach>
-</div>
+    </div>
 </body>
 </html>

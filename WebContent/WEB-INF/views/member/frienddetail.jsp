@@ -26,68 +26,6 @@
             //var cover1 =document.getElementById("cover1");
             cover.src = from.src;
         }
-//      e는 global variable이 됨
-        var v = null, e = null;
-        function toggleCommentStatus(commentNo, edit) {
-            if (v != null) {
-                v.style.display = edit ? 'block' : 'none';
-                e.style.display = edit ? 'none' : 'block';
-            }
-            v = document.getElementById("commentview" + commentNo);
-            e = document.getElementById("commentedit" + commentNo);
-
-            v.style.display = edit ? 'none' : 'block';
-            e.style.display = edit ? 'block' : 'none';
-        }
-
-        function deleteComment(commentNo, boardNo) {
-            var yes = confirm(commentNo + '번 댓글을 삭제 할까요?');
-            if (yes) {
-                location.href = 'deletecomment.action?commentno='
-                    + commentNo + "&boardno=" + boardNo;
-            }
-        }
-
-        function doDelete(boardNo, pageNo) {
-            yes = confirm(boardNo + '번 글을 삭제할까요?');
-            if (yes) {
-                location.href = 'delete.action?boardno=' + boardNo + '&pageno=' + pageNo;
-            }
-        }
-
-        /////////////////////////////////////////
-        var v2 = null;
-        var e2 = null;
-        var editlink = null;
-        var updatelink = null;
-        var cancellink = null;
-        function toggleBoardStatus(boardNo, edit) {
-            if (v2 != null) {
-                v2.style.display = edit ? 'block' : 'none';
-                e2.style.display = edit ? 'none' : 'block';
-            }
-            v2 = document.getElementById("boardcontentview" + boardNo);
-            e2 = document.getElementById("boardcontentedit" + boardNo);
-            editlink = document.getElementById("boardeditlink" + boardNo);
-            updatelink = document.getElementById("boardupdatelink" + boardNo);
-            cancellink = document.getElementById("boardcancellink" + boardNo);
-
-            v2.style.display = edit ? 'none' : 'block';
-            e2.style.display = edit ? 'block' : 'none';
-
-            editlink.style.display = edit ? 'none' : 'inline';
-            updatelink.style.display = edit ? 'inline' : 'none';
-            cancellink.style.display = edit ? 'inline' : 'none';
-        }
-
-
-        function doDelete(boardNo) {
-            yes = confirm(boardNo + '번 글을 삭제할까요?');
-            if (yes) {
-                location.href = 'delete.action?boardno='
-                    + boardNo;
-            }
-        }
 
     </script>
 </head>

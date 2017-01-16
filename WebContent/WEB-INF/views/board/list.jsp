@@ -14,79 +14,11 @@
     <title>게시물 목록</title>
     <link rel="Stylesheet" href="/team5/styles/default.css"/>
 
-    <script type="text/javascript">
-        var v = null, e = null;
-        function toggleCommentStatus(commentNo, edit) {
-            if (v != null) {
-                v.style.display = edit ? 'block' : 'none';
-                e.style.display = edit ? 'none' : 'block';
-            }
-            v = document.getElementById("commentview" + commentNo);
-            e = document.getElementById("commentedit" + commentNo);
-
-            v.style.display = edit ? 'none' : 'block';
-            e.style.display = edit ? 'block' : 'none';
-        }
-        function deleteComment(commentNo, boardNo) {
-            var yes = confirm(commentNo + '번 댓글을 삭제 할까요?');
-            if (yes) {
-                location.href = 'deletecomment.action?' +
-                    'commentno=' + commentNo
-                    + "&boardno=" + boardNo;
-            }
-        }
-        function doDelete(boardNo, pageNo) {
-            var yes = confirm(boardNo + '번 글을 삭제할까요?');
-            if (yes) {
-                location.href = 'delete.action?' +
-                    'boardno=' + boardNo
-                    + '&pageno=' + pageNo;
-            }
-        }
-
-        /////////////////////////////////////////
-        var v2 = null;
-        var e2 = null;
-        var editlink = null;
-        var updatelink = null;
-        var cancellink = null;
-
-        function toggleBoardStatus(boardNo, edit) {
-            if (v2 != null) {
-                v2.style.display = edit ? 'block' : 'none';
-                e2.style.display = edit ? 'none' : 'block';
-
-            } else {
-
-                v2.style.display = edit ? 'none' : 'block';
-                e2.style.display = edit ? 'block' : 'none';
-
-                v2 = document.getElementById("boardcontentview" + boardNo);
-                e2 = document.getElementById("boardcontentedit" + boardNo);
-
-                editlink = document.getElementById("boardeditlink" + boardNo);
-                updatelink = document.getElementById("boardupdatelink" + boardNo);
-                cancellink = document.getElementById("boardcancellink" + boardNo);
-
-                editlink.style.display = edit ? 'none' : 'inline';
-                updatelink.style.display = edit ? 'inline' : 'none';
-                cancellink.style.display = edit ? 'inline' : 'none';
-            }
-        }
-
-        function doDelete(boardNo) {
-            var yes = confirm(boardNo + '번 글을 삭제할까요?');
-            if (yes) {
-                location.href = 'delete.action?boardno=' + boardNo;
-            }
-        }
-    </script>
 </head>
 
 
 <body>
-<%@ include file="/WEB-INF/views/include/header.jsp" %>
-
+<jsp:include page="/WEB-INF/views/include/header.jsp"/>
 <!-- ---------------  글쓰기 영역  ------------------------->
 <div id="pageContainer">
     <div style="padding-top: 25px; text-align: center">

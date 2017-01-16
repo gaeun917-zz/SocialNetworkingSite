@@ -12,43 +12,44 @@
 
 <body>
 <br><br>
-<div class="col-md-offset-2 btn-lg">
-    <h4>${loginuser.name}님의친구요청 목록</h4>
-</div>
 
-<!-- 자신에게 친구 신청한 사람 목록 -->
-<div class="row">
-    <c:if test="${not empty friends}">
-        <c:forEach var="friendInfos" items="${friendInfos}">
-            <c:forEach var="friends" items="${friends}">
-                <c:if test="${friends.memberId == friendInfos.memberId}">
-                    <div class="col-md-offset-2">
-                        <div class="col-md-4">
-                            <span class="glyphicon glyphicon-plus btn-lg"></span>
-                            <span class="glyphicon glyphicon-plus btn-lg"></span>
-                            <br>
-                                ${friends.name}님의 정보
-                            <br> 지역 : ${friendInfos.location }
-                            <br> 대학교 : ${friendInfos.university }
-                            <br> 고등학교 : ${friendInfos.highschool }
-                            <br> <input type="button" class="btn btn-primary" value="추가"
-                                        onclick="location.href='/team5/friend/friendReceive.action?memberId=${friends.memberId}'">
-                            <br><br><br><br>
-                        </div>
-                    </div>
-                </c:if>
-            </c:forEach>
-        </c:forEach>
-    </c:if>
-
-    <div class="col-md-offset-2">
-        <div class="col-md-4">
-            <br><br><br>
-            <span class="glyphicon glyphicon-user btn-lg"></span>
-            <span class="glyphicon glyphicon-remove btn-lg"></span>
-            <c:if test="${empty friends }"><h4>no friend request</h4></c:if>
-        </div>
+    <div class="col-md-offset-2 btn-lg">
+        <h4>${loginuser.name}님의친구요청 목록</h4>
     </div>
+
+    <!-- 자신에게 친구 신청한 사람 목록 -->
+        <div class="row">
+            <c:if test="${not empty friends}">
+                <c:forEach var="friendInfos" items="${friendInfos}">
+                    <c:forEach var="friends" items="${friends}">
+                        <c:if test="${friends.memberId == friendInfos.memberId}">
+                            <div class="col-md-offset-2">
+                                <div class="col-md-4">
+                                    <span class="glyphicon glyphicon-plus btn-lg"></span>
+                                    <span class="glyphicon glyphicon-plus btn-lg"></span>
+                                    <br>
+                                        ${friends.name}님의 정보
+                                    <br> 지역 : ${friendInfos.location }
+                                    <br> 대학교 : ${friendInfos.university }
+                                    <br> 고등학교 : ${friendInfos.highschool }
+                                    <br> <input type="button" class="btn btn-primary" value="추가"
+                                                onclick="location.href='/team5/friend/friendReceive.action?memberId=${friends.memberId}'">
+                                    <br><br><br><br>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </c:forEach>
+            </c:if>
+
+            <div class="col-md-offset-2">
+                <div class="col-md-4">
+                    <br><br><br>
+                    <span class="glyphicon glyphicon-user btn-lg"></span>
+                    <span class="glyphicon glyphicon-remove btn-lg"></span>
+                    <c:if test="${empty friends }"><h4>no friend request</h4></c:if>
+                </div>
+        </div>
 
 
 </div>

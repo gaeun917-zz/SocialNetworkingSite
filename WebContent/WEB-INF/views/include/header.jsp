@@ -11,7 +11,6 @@
 <script type="text/javascript">
 	var proxy;//XMLHttpRequest 객체 참조변수
 	//count=0;
-	//------------------------------------------------
 	//여기부터 자동 완성 기능 구현
 	//문서에서 자동완성박스 이외의 영역을 클릭했을 때 호출될 메서드 정의
 
@@ -27,8 +26,8 @@
 		var id = document.getElementById("search");
 
 		if (id.value.length == 0) {
-			var d = document.getElementById('divAutoCom');;;;;;;;;;;;;;;;;;
-			if (d) {
+            var d = document.getElementById('divAutoCom');
+            if (d) {
 				document.body.removeChild(d);//화면에서 제거
 			}
 			return;
@@ -116,7 +115,10 @@
 		divList.style.top = getTop() + "px";
 	}
 
-	function getTop() {
+
+
+
+    function getTop() {
 		var t = document.getElementById("search");
 		var topPos = 2 + t.offsetHeight;
 		while (t.tagName.toLowerCase() != "body" && t.tagName.toLowerCase() != "html") {
@@ -135,7 +137,113 @@
 		}
 		return leftPos;
 	}
-	//=============================아래는 검색 기능===================================================//
+
+    //==============     Update Profile Photo          =============//
+
+
+    var proxy = null;
+    function changprofilepic() {
+        // proxy readyState code: 1:pre-request, 2:post-request, 3:pre-respond, 4:post-respond
+        // proxy status code: 200 success
+        if (proxy.readyState == 4) {
+            if (proxy.status == 200) {
+                //읽은 데이터를 배분
+                var result = proxy.responseText;
+                alert(result);
+                //eval : String to Code: "var a = 10" -> var a = 10;
+                document.getElementById('profilepic').src = '/team5/upload/' + result;
+                //JQuery $(selector)과 비슷한 기능: '(inline tage, class)#profilepic'인 모든 요소를 List로 Return
+                var list = document.querySelectorAll(".profilepic");
+                for (var i in list) {
+                    list[i].src = '/team5/upload/' + result;
+                }
+            } else {
+                alert('오류 :' + proxy.status);
+            }
+        }
+    }
+
+    function doUpdatePicture(memberId, fileName) {
+
+        //location.href='/team5/member/updateprofilepic.action?
+        //               memberid=${loginuser.memberId}&profilepic=${uploadfile.savedFileName}';
+
+        proxy = new XMLHttpRequest();//Ajax
+        proxy.open("GET", "/team5/member/updateprofilepic.action?memberid=" + memberId + "&profilepic=" + fileName, true);
+        proxy.onreadystatechange = changprofilepic;
+        proxy.send(null);
+    }
+
+
+    function changeImage(from) {
+        //소스만 바꿔주면 됨.
+        var cover = document.getElementById("cover");
+        cover.src = from.src;
+    }
+
+
+    //==============   Toggle Board and Comment         =============//
+
+    var v2 = null;
+    var e2 = null;
+    var editlink = null;
+    var updatelink = null;
+    var cancellink = null;
+    function toggleBoardStatus(boardNo, edit) {
+        if (v2 != null) {
+            v2.style.display = edit ? 'block' : 'none';
+            e2.style.display = edit ? 'none' : 'block';
+        }
+        v2 = document.getElementById("boardcontentview" + boardNo);
+        e2 = document.getElementById("boardcontentedit" + boardNo);
+
+        editlink = document.getElementById("boardeditlink" + boardNo);
+        updatelink = document.getElementById("boardupdatelink" + boardNo);
+        cancellink = document.getElementById("boardcancellink" + boardNo);
+
+        v2.style.display = edit ? 'none' : 'block';
+        e2.style.display = edit ? 'block' : 'none';
+
+        editlink.style.display = edit ? 'none' : 'inline';
+        updatelink.style.display = edit ? 'inline' : 'none';
+        cancellink.style.display = edit ? 'inline' : 'none';
+    }
+
+
+    var v = null, e = null;
+    function toggleCommentStatus(commentNo, edit) {
+        if (v != null) {
+            v.style.display = edit ? 'block' : 'none';
+            e.style.display = edit ? 'none' : 'block';
+        }
+        v = document.getElementById("commentview" + commentNo);
+        e = document.getElementById("commentedit" + commentNo);
+
+        v.style.display = edit ? 'none' : 'block';
+        e.style.display = edit ? 'block' : 'none';
+    }
+
+
+    //==============     DELECT COMMENT and BOARD           =============//
+
+
+    function deleteComment(commentNo, boardNo) {
+        var yes = confirm(commentNo + '번 댓글을 삭제 할까요?');
+        if (yes) {
+            location.href = 'deletecomment.action?' +
+                'commentno=' + commentNo + "&boardno=" + boardNo;
+        }
+    }
+
+    function doDelete(boardNo, pageNo) {
+        yes = confirm(boardNo + '번 글을 삭제할까요?');
+        if (yes) {
+            location.href = 'delete.action?' +
+                'boardno=' + boardNo + '&pageno=' + pageNo;
+        }
+    }
+
+    //==============     SEARCH           =============//
 
 	function dofriendSearch() {
 		var search = document.getElementById("search");
@@ -150,7 +258,8 @@
 	 }
 	 */
 
-	//================================= 아래는 댓글 알림기능===============================================//
+
+	//===========      Comment   ==================//
 	function doCommentConfirm() {
 
 		/* var createDiv=document.createElement("div");
@@ -219,44 +328,45 @@
 
 		//count=count+1;
 	}
+
+
 </script>
 
-<div id="header">
-	<div class="title">
-		<h1>
-			<a href="#">fakebook</a>
-		</h1>
-	</div>
+		<div id="header">
+			<div class="title">
+				<h1>
+					<a href="#">fakebook</a>
+				</h1>
+			</div>
+				<c:if test="${not empty sessionScope.loginuser }">
+					<nav class="navbar navbar-right navbar-fixed-top">
+						<div class="containter">
+							<div class="btn-group">
+								<input type="text" id="search" placeholder="지역/학교/이름 입력" name="search" style="width: 150px; color: #010802"
+									   onkeyup="doAutoComplete();" />
 
-	<c:if test="${not empty sessionScope.loginuser }">
-		<nav class="navbar navbar-right navbar-fixed-top">
-			<div class="containter">
-				<div class="btn-group">
-					<input type="text" id="search" placeholder="지역/학교/이름 입력" name="search" style="width: 150px; color: #010802"
-						   onkeyup="doAutoComplete();" />
+								<input type="button"  class="btn btn-primary" style="color: #010802" value="검색"
+									   onclick="dofriendSearch();" />
 
-					<input type="button"  class="btn btn-primary" style="color: #010802" value="검색"
-						   onclick="dofriendSearch();" />
+								<input type="button" class="btn btn-primary" id="memberEmail" value="${ loginuser.email }"
+									   onclick="location.href='/team5/memberdetail/detail.action?memberid=${ loginuser.memberId }'">
 
-					<input type="button" class="btn btn-primary" id="memberEmail" value="${ loginuser.email }"
-						   onclick="location.href='/team5/memberdetail/detail.action?memberid=${ loginuser.memberId }'">
+								<input type="button" class="btn btn-primary" id="logout" value="로그아웃"
+									   onclick="location.href='/team5/account/logout.action'">
 
-					<input type="button" class="btn btn-primary" id="logout" value="로그아웃"
-						   onclick="location.href='/team5/account/logout.action'">
+								<input type="button" class="btn btn-primary" id="friendReceiveForm" value="친구요청"
+									   onclick="location.href='/team5/friend/friendReceiveForm.action'">
 
-					<input type="button" class="btn btn-primary" id="friendReceiveForm" value="친구요청"
-						   onclick="location.href='/team5/friend/friendReceiveForm.action'">
+								<input type="button" class="btn btn-primary" id="alarm" value="메세지알림"
+									   onclick="location.href='#'">
 
-					<input type="button" class="btn btn-primary" id="alarm" value="메세지알림"
-						   onclick="location.href='#'">
+								<input type="button" class="btn btn-primary" id="home" value="타임라인"
+									   onclick="location.href='/team5/board/list.action'">
 
-					<input type="button" class="btn btn-primary" id="home" value="타임라인"
-						   onclick="location.href='/team5/board/list.action'">
-
-					<input type="button" class="btn btn-primary" id="friend" value="친구"
-						   onclick="location.href='/team5/friend/friendViewForm.action'">
-				</div>
-	</c:if>
+								<input type="button" class="btn btn-primary" id="friend" value="친구"
+									   onclick="location.href='/team5/friend/friendViewForm.action'">
+							</div>
+				</c:if>
 				<!------------------------   로그인 안했을 경우 -------------------------------->
 				<c:if test="${empty sessionScope.loginuser}">
 					<div class="links">
